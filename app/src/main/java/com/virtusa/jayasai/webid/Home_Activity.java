@@ -27,6 +27,14 @@ public class Home_Activity extends ActionBarActivity {
         //check for intenet
 
         mainWebview.loadUrl("https://www.google.lk");
+
+
+
+    }
+
+    public boolean registerGCM(){
+
+        return true;
     }
 
     @Override
