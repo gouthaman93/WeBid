@@ -5,8 +5,10 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmReceiver;
@@ -31,8 +33,10 @@ public class Home_Activity extends ActionBarActivity {
         }
 
         //check for intenet
+        mainWebview.setWebViewClient(new WebViewClient());
+        mainWebview.setWebChromeClient(new WebChromeClient());
+        mainWebview.loadUrl("http://vbid.herokuapp.com");
 
-        mainWebview.loadUrl("https://www.google.lk");
 
         //Register for push notification
         pushClientManager = new GCMClientManager(this, PROJECT_NUMBER);
