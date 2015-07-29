@@ -1,4 +1,4 @@
-package com.virtusa.jayasai.gcm;
+package com.virtusa.adcausporte.gcm;
 
 /**
  * Created by jayasaigoutheman on 7/28/15.

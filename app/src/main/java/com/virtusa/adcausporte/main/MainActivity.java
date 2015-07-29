@@ -1,12 +1,10 @@
-package com.virtusa.jayasai.webid;
+package com.virtusa.adcausporte.main;
 
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -29,7 +27,7 @@ public class MainActivity extends ActionBarActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }finally{
-                    mainintent = new Intent(MainActivity.this, Home_Activity.class);
+                    mainintent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(mainintent);
                     finish();
                 }

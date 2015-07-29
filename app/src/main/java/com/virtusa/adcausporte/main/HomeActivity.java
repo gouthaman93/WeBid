@@ -1,4 +1,4 @@
-package com.virtusa.jayasai.webid;
+package com.virtusa.adcausporte.main;
 
 import android.os.Build;
 import android.support.v7.app.ActionBarActivity;
@@ -11,11 +11,10 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
-import com.google.android.gms.gcm.GcmReceiver;
-import com.virtusa.jayasai.gcm.*;
+import com.virtusa.adcausporte.gcm.*;
 
 
-public class Home_Activity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity {
 
     WebView mainWebview;
     private GCMClientManager pushClientManager;

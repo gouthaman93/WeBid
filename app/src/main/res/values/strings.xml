@@ -1,7 +1,5 @@
 <resources>
-    <string name="app_name">WeBid</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Adcaú SpÕrté</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_home_">Home_Activity</string>
+    <string name="title_activity_home_">Adcaú SpÕrté Home</string>
 </resources>

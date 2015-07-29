@@ -1,4 +1,4 @@
-package com.virtusa.jayasai.gcm;
+package com.virtusa.adcausporte.gcm;
 
 import com.google.android.gms.gcm.GcmListenerService;
 

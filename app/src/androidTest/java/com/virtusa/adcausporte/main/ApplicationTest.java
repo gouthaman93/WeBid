@@ -1,4 +1,4 @@
-package com.virtusa.jayasai.webid;
+package com.virtusa.adcausporte.main;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
