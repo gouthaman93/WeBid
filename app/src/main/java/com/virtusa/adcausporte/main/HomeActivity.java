@@ -1,14 +1,21 @@
 package com.virtusa.adcausporte.main;
 
+import android.content.pm.ActivityInfo;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.virtusa.adcausporte.gcm.*;
@@ -18,12 +25,36 @@ public class HomeActivity extends ActionBarActivity {
 
     WebView mainWebview;
     private GCMClientManager pushClientManager;
-    String PROJECT_NUMBER = "193167212796";
+    String PROJECT_NUMBER = "1098372533451";
+    /**
+     * The Constant ACTION_BAR_COLOR.
+     */
+    public static final int ACTION_BAR_COLOR = 0xff1F3C92;
+    /**
+     * The Constant STATUS_BAR_COLOR.
+     */
+    public static final int STATUS_BAR_COLOR = 0xdd1F3C92;
+    private static final int SDK = 21;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ActionBar aBar = getSupportActionBar();
+        // Hide application icon from action bar
+        aBar.setDisplayShowHomeEnabled(false);
+        // Change action bar color with configured color
+        aBar.setBackgroundDrawable(new ColorDrawable(ACTION_BAR_COLOR));
+        aBar.setDisplayShowTitleEnabled(true);
+
+
+        if (android.os.Build.VERSION.SDK_INT >= SDK) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.setStatusBarColor(STATUS_BAR_COLOR);
+        }
 
         mainWebview = (WebView) findViewById(R.id.webViewMain);
 
@@ -31,10 +62,11 @@ public class HomeActivity extends ActionBarActivity {
             mainWebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
 
-        //check for intenet
+        mainWebview.getSettings().setUseWideViewPort(true);
+        mainWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mainWebview.setWebViewClient(new WebViewClient());
         mainWebview.setWebChromeClient(new WebChromeClient());
-        mainWebview.loadUrl("http://vbid.herokuapp.com");
+        mainWebview.loadUrl("http://vbid.herokuapp.com/user_login.php");
 
 
         //Register for push notification
