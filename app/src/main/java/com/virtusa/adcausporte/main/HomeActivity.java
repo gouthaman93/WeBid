@@ -15,7 +15,6 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.virtusa.adcausporte.gcm.*;
@@ -74,8 +73,8 @@ public class HomeActivity extends ActionBarActivity {
         pushClientManager.registerIfNeeded(new GCMClientManager.RegistrationCompletedHandler() {
             @Override
             public void onSuccess(String registrationId, boolean isNewRegistration) {
-                Toast.makeText(getApplicationContext(), registrationId,
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getApplicationContext(), registrationId,
+                        Toast.LENGTH_SHORT).show();*/
                 // SEND async device registration to your back-end server
                 // linking user with device registration id
                 // POST https://my-back-end.com/devices/register?user_id=123&device_id=abc
@@ -117,6 +116,8 @@ public class HomeActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            mainWebview.loadUrl("http://vbid.herokuapp.com");
             return true;
         }
 
