@@ -31,6 +31,8 @@ public class HomeActivity extends ActionBarActivity {
     WebView mainWebview;
     LinearLayout footer;
     ProgressDialog pd;
+    boolean isloginLoadedFirsttime = true;
+    boolean isFooterVisible = false;
     private GCMClientManager pushClientManager;
     String PROJECT_NUMBER = "1098372533451";
     /**
@@ -87,6 +89,12 @@ public class HomeActivity extends ActionBarActivity {
         mainWebview.setHorizontalScrollBarEnabled(false);
         mainWebview.setWebViewClient(new WebViewClient() {
 
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                isloginLoadedFirsttime = false;
+                return false;
+            }
+
             public void onPageFinished(WebView view, String url) {
 
                 /*if(pd.isShowing()&&pd!=null)
@@ -96,69 +104,75 @@ public class HomeActivity extends ActionBarActivity {
 
                 invalidateOptionsMenu();
                 if(!(mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
-                    footer.setVisibility(View.VISIBLE);
-
-                    Animation slide = null;
-                    slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                            5.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+                    //footer.setVisibility(View.VISIBLE);
 
 
-                    slide.setDuration(2000);
-                    slide.setFillAfter(true);
-                    slide.setFillEnabled(true);
-                    footer.startAnimation(slide);
 
-                    slide.setAnimationListener(new Animation.AnimationListener() {
+                    if(!isFooterVisible){
 
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+                        Animation slide = null;
+                        slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                                5.0f, Animation.RELATIVE_TO_SELF, 0.0f);
 
-                        }
+                        slide.setDuration(2000);
+                        slide.setFillAfter(true);
+                        slide.setFillEnabled(true);
+                        footer.startAnimation(slide);
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
+                        slide.setAnimationListener(new Animation.AnimationListener() {
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
 
-                        }
+                            }
 
-                    });
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
 
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+
+                            }
+
+                        });
+                        isFooterVisible = true;
+                    }
 
                 }else{
 
+                    if(!isloginLoadedFirsttime) {
+                        Animation slide = null;
+                        slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                                0.0f, Animation.RELATIVE_TO_SELF, 5.0f);
 
-                    Animation slide = null;
-                    slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                            0.0f, Animation.RELATIVE_TO_SELF, 5.0f);
 
+                        slide.setDuration(2000);
+                        slide.setFillAfter(true);
+                        slide.setFillEnabled(true);
+                        footer.startAnimation(slide);
 
-                    slide.setDuration(2000);
-                    slide.setFillAfter(true);
-                    slide.setFillEnabled(true);
-                    footer.startAnimation(slide);
+                        slide.setAnimationListener(new Animation.AnimationListener() {
 
-                    slide.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
 
-                        @Override
-                        public void onAnimationStart(Animation animation) {
+                            }
 
-                        }
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                            }
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) {
-                        }
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                footer.setVisibility(View.INVISIBLE);
+                                isFooterVisible = false;
+                            }
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            footer.setVisibility(View.INVISIBLE);
-                        }
-
-                    });
+                        });
+                    }
                 }
 
             }
