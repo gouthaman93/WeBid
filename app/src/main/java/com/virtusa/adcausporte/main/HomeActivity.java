@@ -1,11 +1,13 @@
 package com.virtusa.adcausporte.main;
 
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +17,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.virtusa.adcausporte.gcm.*;
@@ -23,6 +26,8 @@ import com.virtusa.adcausporte.gcm.*;
 public class HomeActivity extends ActionBarActivity {
 
     WebView mainWebview;
+    LinearLayout footer;
+    ProgressDialog pd;
     private GCMClientManager pushClientManager;
     String PROJECT_NUMBER = "1098372533451";
     /**
@@ -40,6 +45,9 @@ public class HomeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+
+
         ActionBar aBar = getSupportActionBar();
         // Hide application icon from action bar
         aBar.setDisplayShowHomeEnabled(false);
@@ -56,14 +64,40 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         mainWebview = (WebView) findViewById(R.id.webViewMain);
+        footer = (LinearLayout) findViewById(R.id.layoutfooterbar);
 
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.navigationbarcolor));
+        }
+
+        //pd = ProgressDialog.show(this, "", "Loading...",true);
+
+
+        footer.setVisibility(View.INVISIBLE);
         if (Build.VERSION.SDK_INT >= 19) {
             mainWebview.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         }
 
         mainWebview.getSettings().setUseWideViewPort(true);
         mainWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-        mainWebview.setWebViewClient(new WebViewClient());
+        mainWebview.setWebViewClient(new WebViewClient() {
+
+            public void onPageFinished(WebView view, String url) {
+
+                /*if(pd.isShowing()&&pd!=null)
+                {
+                    pd.dismiss();
+                }*/
+
+                invalidateOptionsMenu();
+                if(!(mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
+                    footer.setVisibility(View.VISIBLE);
+                }else{
+                    footer.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
         mainWebview.setWebChromeClient(new WebChromeClient());
         mainWebview.loadUrl("http://vbid.herokuapp.com/user_login.php");
 
@@ -93,6 +127,8 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
 
+
+
     }
 
     public boolean registerGCM(){
@@ -104,7 +140,32 @@ public class HomeActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home_, menu);
-        return true;
+
+        if((mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(1).setEnabled(false);
+            return false;
+
+        }else{
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(1).setEnabled(true);
+            return true;
+        }
+
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mainWebview.canGoBack()) {
+            mainWebview.goBack();
+            return true;
+        }
+        else{
+            finish();
+            return true;
+        }
+
     }
 
     @Override
@@ -118,6 +179,10 @@ public class HomeActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
 
             mainWebview.loadUrl("http://vbid.herokuapp.com");
+            return true;
+        }if (id == R.id.action_logout) {
+
+            mainWebview.loadUrl("http://vbid.herokuapp.com/user_login.php");
             return true;
         }
 

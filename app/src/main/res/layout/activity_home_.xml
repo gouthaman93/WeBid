@@ -7,5 +7,24 @@
     <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:id="@+id/webViewMain"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="#1F3C92"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical"
+        android:id="@+id/layoutfooterbar">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Powered by Virtusa &#169; 2015 - 2016"
+            android:textColor="@color/abc_primary_text_disable_only_material_dark"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 </FrameLayout>
