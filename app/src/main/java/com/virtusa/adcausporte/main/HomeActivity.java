@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -80,6 +83,8 @@ public class HomeActivity extends ActionBarActivity {
 
         mainWebview.getSettings().setUseWideViewPort(true);
         mainWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        mainWebview.setVerticalScrollBarEnabled(false);
+        mainWebview.setHorizontalScrollBarEnabled(false);
         mainWebview.setWebViewClient(new WebViewClient() {
 
             public void onPageFinished(WebView view, String url) {
@@ -92,8 +97,68 @@ public class HomeActivity extends ActionBarActivity {
                 invalidateOptionsMenu();
                 if(!(mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
                     footer.setVisibility(View.VISIBLE);
+
+                    Animation slide = null;
+                    slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                            5.0f, Animation.RELATIVE_TO_SELF, 0.0f);
+
+
+                    slide.setDuration(2000);
+                    slide.setFillAfter(true);
+                    slide.setFillEnabled(true);
+                    footer.startAnimation(slide);
+
+                    slide.setAnimationListener(new Animation.AnimationListener() {
+
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+
+                        }
+
+                    });
+
+
                 }else{
-                    footer.setVisibility(View.INVISIBLE);
+
+
+                    Animation slide = null;
+                    slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                            Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                            0.0f, Animation.RELATIVE_TO_SELF, 5.0f);
+
+
+                    slide.setDuration(2000);
+                    slide.setFillAfter(true);
+                    slide.setFillEnabled(true);
+                    footer.startAnimation(slide);
+
+                    slide.setAnimationListener(new Animation.AnimationListener() {
+
+                        @Override
+                        public void onAnimationStart(Animation animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            footer.setVisibility(View.INVISIBLE);
+                        }
+
+                    });
                 }
 
             }
