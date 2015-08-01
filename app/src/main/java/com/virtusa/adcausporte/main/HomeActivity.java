@@ -87,6 +87,7 @@ public class HomeActivity extends ActionBarActivity {
         mainWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mainWebview.setVerticalScrollBarEnabled(false);
         mainWebview.setHorizontalScrollBarEnabled(false);
+        mainWebview.getSettings().setJavaScriptEnabled(true);
         mainWebview.setWebViewClient(new WebViewClient() {
 
             @Override
