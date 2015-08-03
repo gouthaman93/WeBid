@@ -7,6 +7,7 @@ import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.virtusa.adcausporte.gcm.*;
+
+import java.io.File;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -87,7 +90,14 @@ public class HomeActivity extends ActionBarActivity {
         mainWebview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
         mainWebview.setVerticalScrollBarEnabled(false);
         mainWebview.setHorizontalScrollBarEnabled(false);
+        mainWebview.getSettings().setAppCacheEnabled(false);
         mainWebview.getSettings().setJavaScriptEnabled(true);
+        mainWebview.getSettings().setPluginState(WebSettings.PluginState.ON);
+
+
+        clearCache();
+        clearApplicationData();
+
         mainWebview.setWebViewClient(new WebViewClient() {
 
             @Override
@@ -102,6 +112,7 @@ public class HomeActivity extends ActionBarActivity {
                 {
                     pd.dismiss();
                 }*/
+
 
                 invalidateOptionsMenu();
                 if(!(mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
@@ -240,8 +251,7 @@ public class HomeActivity extends ActionBarActivity {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mainWebview.canGoBack()) {
             mainWebview.goBack();
             return true;
-        }
-        else{
+        } else{
             finish();
             return true;
         }
@@ -258,7 +268,13 @@ public class HomeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
-            mainWebview.loadUrl("http://vbid.herokuapp.com");
+            if(mainWebview.getUrl().equals("http://vbid.herokuapp.com") || mainWebview.getUrl().equals("http://vbid.herokuapp.com/index.php")){
+                mainWebview.reload();
+                Toast.makeText(getApplicationContext(), "Refreshing home page ... " , Toast.LENGTH_SHORT);
+            }else{
+                mainWebview.loadUrl("http://vbid.herokuapp.com");
+            }
+
             return true;
         }if (id == R.id.action_logout) {
 
@@ -267,5 +283,52 @@ public class HomeActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void clearCache(){
+
+        mainWebview.clearCache(true);
+        mainWebview.clearHistory();
+
+        getApplicationContext().deleteDatabase("webview.db");
+        getApplicationContext().deleteDatabase("webviewCache.db");
+    }
+
+    public void clearApplicationData()
+    {
+        File cache = getCacheDir();
+        File appDir = new File(cache.getParent());
+        if (appDir.exists()) {
+            String[] children = appDir.list();
+            for (String s : children) {
+                if (!s.equals("lib")) {
+                    deleteDir(new File(appDir, s));
+                    Log.i("TAG", "**************** File /data/data/APP_PACKAGE/" + s + " DELETED *******************");
+                }
+            }
+        }
+    }
+
+    public static boolean deleteDir(File dir)
+    {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                boolean success = deleteDir(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+        return dir.delete();
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+
+        mainWebview.loadUrl(mainWebview.getUrl());
     }
 }
