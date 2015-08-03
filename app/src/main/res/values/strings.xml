@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_home_">ADCAú SPÕRTé</string>
     <string name="lognurl">http://vbid.herokuapp.com/user_login.php</string>
+    <string name="title_activity_gcmtest">GCMTestActivity</string>
+
+    <string name="hello_world">Hello world!</string>
 </resources>

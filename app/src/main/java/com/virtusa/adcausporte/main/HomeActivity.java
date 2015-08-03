@@ -1,6 +1,7 @@
 package com.virtusa.adcausporte.main;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -285,6 +286,13 @@ public class HomeActivity extends ActionBarActivity {
         }if (id == R.id.action_logout) {
 
             mainWebview.loadUrl("http://vbid.herokuapp.com/user_login.php");
+            return true;
+        }
+
+        if (id == R.id.action_gcm) {
+
+            Intent inten = new Intent(HomeActivity.this , GCMTestActivity.class);
+            startActivity(inten);
             return true;
         }
 
