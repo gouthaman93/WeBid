@@ -268,11 +268,17 @@ public class HomeActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
 
+            //clear previous back
+            mainWebview.clearHistory();
+
             if(mainWebview.getUrl().equals("http://vbid.herokuapp.com") || mainWebview.getUrl().equals("http://vbid.herokuapp.com/index.php")){
                 mainWebview.reload();
-                Toast.makeText(getApplicationContext(), "Refreshing home page ... " , Toast.LENGTH_SHORT);
+                //mainWebview.loadUrl("http://vbid.herokuapp.com/index.php");
+                Toast.makeText(getApplicationContext(), "Refreshing home page ... " , Toast.LENGTH_SHORT).show();
             }else{
-                mainWebview.loadUrl("http://vbid.herokuapp.com");
+
+                mainWebview.loadUrl("about:blank");
+                mainWebview.loadUrl("http://vbid.herokuapp.com/index.php");
             }
 
             return true;
@@ -288,7 +294,6 @@ public class HomeActivity extends ActionBarActivity {
     public void clearCache(){
 
         mainWebview.clearCache(true);
-        mainWebview.clearHistory();
 
         getApplicationContext().deleteDatabase("webview.db");
         getApplicationContext().deleteDatabase("webviewCache.db");
@@ -328,7 +333,8 @@ public class HomeActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
-
+        mainWebview.clearCache(true);
+        clearApplicationData();
         mainWebview.loadUrl(mainWebview.getUrl());
     }
 }
