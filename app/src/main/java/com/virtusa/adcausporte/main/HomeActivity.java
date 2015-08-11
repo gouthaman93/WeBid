@@ -39,6 +39,7 @@ public class HomeActivity extends ActionBarActivity {
     boolean isFooterVisible = false;
     private GCMClientManager pushClientManager;
     String PROJECT_NUMBER = "1098372533451";
+    String BASEURL = "http://herokuadcau.herokuapp.com";
     /**
      * The Constant ACTION_BAR_COLOR.
      */
@@ -116,12 +117,11 @@ public class HomeActivity extends ActionBarActivity {
 
 
                 invalidateOptionsMenu();
-                if(!(mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
+                if (!(mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com/user_login.php"))) {
                     //footer.setVisibility(View.VISIBLE);
 
 
-
-                    if(!isFooterVisible){
+                    if (!isFooterVisible) {
 
                         Animation slide = null;
                         slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
@@ -153,9 +153,9 @@ public class HomeActivity extends ActionBarActivity {
                         isFooterVisible = true;
                     }
 
-                }else{
+                } else {
 
-                    if(!isloginLoadedFirsttime) {
+                    if (!isloginLoadedFirsttime) {
                         Animation slide = null;
                         slide = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
@@ -191,7 +191,8 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
         mainWebview.setWebChromeClient(new WebChromeClient());
-        mainWebview.loadUrl("http://vbid.herokuapp.com/user_login.php");
+        mainWebview.loadUrl("http://herokuadcau.herokuapp.com/user_login.php");
+
 
 
         //Register for push notification
@@ -233,7 +234,7 @@ public class HomeActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home_, menu);
 
-        if((mainWebview.getUrl().equals("http://vbid.herokuapp.com/user_login.php"))){
+        if((mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com/user_login.php"))){
             menu.getItem(0).setEnabled(false);
             menu.getItem(1).setEnabled(false);
             return false;
@@ -272,20 +273,20 @@ public class HomeActivity extends ActionBarActivity {
             //clear previous back
             mainWebview.clearHistory();
 
-            if(mainWebview.getUrl().equals("http://vbid.herokuapp.com") || mainWebview.getUrl().equals("http://vbid.herokuapp.com/index.php")){
+            if(mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com") || mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com/index.php")){
                 mainWebview.reload();
                 //mainWebview.loadUrl("http://vbid.herokuapp.com/index.php");
                 Toast.makeText(getApplicationContext(), "Refreshing home page ... " , Toast.LENGTH_SHORT).show();
             }else{
 
                 mainWebview.loadUrl("about:blank");
-                mainWebview.loadUrl("http://vbid.herokuapp.com/index.php");
+                mainWebview.loadUrl("http://herokuadcau.herokuapp.com/index.php");
             }
 
             return true;
         }if (id == R.id.action_logout) {
 
-            mainWebview.loadUrl("http://vbid.herokuapp.com/user_login.php");
+            mainWebview.loadUrl("http://herokuadcau.herokuapp.com/user_login.php");
             return true;
         }
 
