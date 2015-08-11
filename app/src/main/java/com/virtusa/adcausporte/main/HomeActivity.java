@@ -117,7 +117,7 @@ public class HomeActivity extends ActionBarActivity {
 
 
                 invalidateOptionsMenu();
-                if (!(mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com/user_login.php"))) {
+                if (!(mainWebview.getUrl().equals(BASEURL + "/user_login.php"))) {
                     //footer.setVisibility(View.VISIBLE);
 
 
@@ -191,7 +191,7 @@ public class HomeActivity extends ActionBarActivity {
             }
         });
         mainWebview.setWebChromeClient(new WebChromeClient());
-        mainWebview.loadUrl("http://herokuadcau.herokuapp.com/user_login.php");
+        mainWebview.loadUrl(BASEURL + "/user_login.php");
 
 
 
@@ -234,7 +234,7 @@ public class HomeActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_home_, menu);
 
-        if((mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com/user_login.php"))){
+        if((mainWebview.getUrl().equals(BASEURL + "/user_login.php"))){
             menu.getItem(0).setEnabled(false);
             menu.getItem(1).setEnabled(false);
             return false;
@@ -273,20 +273,20 @@ public class HomeActivity extends ActionBarActivity {
             //clear previous back
             mainWebview.clearHistory();
 
-            if(mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com") || mainWebview.getUrl().equals("http://herokuadcau.herokuapp.com/index.php")){
+            if(mainWebview.getUrl().equals(BASEURL) || mainWebview.getUrl().equals(BASEURL + "/index.php")){
                 mainWebview.reload();
                 //mainWebview.loadUrl("http://vbid.herokuapp.com/index.php");
                 Toast.makeText(getApplicationContext(), "Refreshing home page ... " , Toast.LENGTH_SHORT).show();
             }else{
 
                 mainWebview.loadUrl("about:blank");
-                mainWebview.loadUrl("http://herokuadcau.herokuapp.com/index.php");
+                mainWebview.loadUrl(BASEURL + "/index.php");
             }
 
             return true;
         }if (id == R.id.action_logout) {
 
-            mainWebview.loadUrl("http://herokuadcau.herokuapp.com/user_login.php");
+            mainWebview.loadUrl(BASEURL + "/user_login.php");
             return true;
         }
 
